@@ -1,0 +1,23 @@
+local augroup = vim.api.nvim_create_augroup
+BearowGroup = augroup('Bearow', {})
+
+require("bearow.packer")
+require("bearow.set")
+require("bearow.keymap")
+require("bearow.colors")
+require("bearow.tree-sitter")
+require("bearow.lsp")
+
+local autocmd = vim.api.nvim_create_autocmd
+local yank_group = augroup('HighlightYank', {})
+
+autocmd('TextYankPost', {
+    group = yank_group,
+    pattern = '*',
+    callback = function()
+        vim.highlight.on_yank({
+            higroup = 'IncSearch',
+            timeout = 40,
+        })
+    end,
+})
